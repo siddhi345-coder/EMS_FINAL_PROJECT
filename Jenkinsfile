@@ -24,8 +24,8 @@ pipeline {
 
         stage('Build Docker Images') {
             steps {
-                sh 'docker build -t $BACKEND_IMAGE ./ems-backend'
-                sh 'docker build -t $FRONTEND_IMAGE ./ems-frontend'
+                sh 'docker build -t $BACKEND_IMAGE ./Backend'
+                sh 'docker build -t $FRONTEND_IMAGE ./Frontend'
                 sh 'docker build -t $REPORTS_IMAGE ./reports_service'
             }
         }
