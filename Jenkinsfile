@@ -10,12 +10,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout Code') {
-            steps {
-                git 'https://github.com/siddhi345-coder/EMS_FINAL_PROJECT.git'
-            }
-        }
-
         stage('Docker Login') {
             steps {
                 withCredentials([usernamePassword(
