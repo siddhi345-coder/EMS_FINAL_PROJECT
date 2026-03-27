@@ -12,7 +12,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git 'https://https://github.com/siddhi345-coder/EMS_FINAL_PROJECT.git'
+                git 'https://github.com/siddhi345-coder/EMS_FINAL_PROJECT.git'
             }
         }
 
