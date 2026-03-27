@@ -38,15 +38,29 @@ import "./EmployeeDashboard.css";
 
 const formatTime = (t) => {
   if (!t) return "-";
-  // Handle both HH:MM:SS time strings and full ISO timestamps
+
+  // If full ISO timestamp (contains T)
   if (String(t).includes("T")) {
-    return new Date(t).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: true });
+    return new Date(t).toLocaleTimeString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true
+    });
   }
-  const [h, m] = String(t).split(":");
-  const hour = parseInt(h);
-  const ampm = hour >= 12 ? "PM" : "AM";
-  const h12 = hour % 12 || 12;
-  return `${h12}:${m} ${ampm}`;
+
+  // If only HH:MM:SS format (from DB)
+  const [h, m, s] = String(t).split(":").map(Number);
+
+  const date = new Date();
+  date.setHours(h, m, s || 0);
+
+  return date.toLocaleTimeString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true
+  });
 };
 
 const formatHours = (h) => {

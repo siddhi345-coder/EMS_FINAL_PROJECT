@@ -20,7 +20,9 @@ import {
   FaUmbrellaBeach,
   FaRegClock,
   FaIdBadge,
-  FaUpload
+  FaUpload,
+  FaDownload,
+  FaFileAlt
 } from "react-icons/fa";
 import {
   getEmployees,
@@ -618,7 +620,8 @@ const [reportMonth, setReportMonth] = useState(() => {
           { key: "attendance", label: "Attendance" },
           { key: "leaves", label: "Leaves" },
           { key: "my-attendance", label: "My Attendance" },
-          { key: "my-profile", label: "My Profile" }
+          { key: "my-profile", label: "My Profile" },
+          { key: "reports", label: "Reports" }
         ].map((tab) => (
           <button
             key={tab.key}
@@ -1164,6 +1167,63 @@ const [reportMonth, setReportMonth] = useState(() => {
             )}
           </div>
         </div>
+      )}
+
+      {section === "reports" && (
+        <section className="hr-panel">
+          <div className="panel-header">
+            <h2>Download Reports</h2>
+          </div>
+          <div className="report-grid">
+
+            <div className="report-card">
+              <h4><FaFileAlt /> Employee Reports</h4>
+              <p>Summary and department-wise breakdown of all employees.</p>
+              <div className="report-actions">
+                <a className="btn-primary" href="http://localhost:8000/reports/employees/summary/download" download>
+                  <FaDownload /> Summary
+                </a>
+                <a className="btn-outline" href="http://localhost:8000/reports/employees/department-wise/download" download>
+                  <FaDownload /> Dept-wise
+                </a>
+              </div>
+            </div>
+
+            <div className="report-card">
+              <h4><FaFileAlt /> Attendance Reports</h4>
+              <p>Monthly attendance report. Select month and year to download.</p>
+              <div className="report-actions" style={{ flexDirection: "column", gap: 8 }}>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <input
+                    className="input"
+                    type="month"
+                    value={reportMonth}
+                    onChange={(e) => setReportMonth(e.target.value)}
+                    style={{ flex: 1 }}
+                  />
+                </div>
+                <a
+                  className="btn-primary"
+                  href={`http://localhost:8000/reports/attendance/monthly/download?month=${reportMonth.split("-")[1]}&year=${reportMonth.split("-")[0]}`}
+                  download
+                >
+                  <FaDownload /> Download Attendance
+                </a>
+              </div>
+            </div>
+
+            <div className="report-card">
+              <h4><FaFileAlt /> Leave Reports</h4>
+              <p>Leave status summary across all employees.</p>
+              <div className="report-actions">
+                <a className="btn-primary" href="http://localhost:8000/reports/leaves/status-summary/download" download>
+                  <FaDownload /> Leave Summary
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </section>
       )}
 
       {showEmployeeForm && (
