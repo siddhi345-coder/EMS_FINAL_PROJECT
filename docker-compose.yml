@@ -28,12 +28,11 @@ services:
       - ./Backend/.env
 
   frontend:
-    build: ./Frontend
-    container_name: ems-frontend
-    ports:
-      - "5173:80"
-    depends_on:
-      - backend
+  build: ./Frontend
+  ports:
+    - "80:80"
+  depends_on:
+    - backend
 
 volumes:
   db_data:
