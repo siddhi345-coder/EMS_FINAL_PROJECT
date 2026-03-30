@@ -63,9 +63,12 @@ exports.login = async (req, res) => {
     let employee_id = user.employee_id || null;
 
     if (!employee_id && user.role !== "Admin") {
+      // Use a deterministic, non-empty email to avoid NOT NULL/UNIQUE violations
+      const safeUsername = String(user.username || "user").replace(/[^a-zA-Z0-9]/g, "_");
+      const fakeEmail = `${safeUsername}_${user.user_id}@ems.local`;
       const [empResult] = await db.execute(
         "INSERT INTO employees (first_name, last_name, email, password) VALUES (?, ?, ?, ?)",
-        [user.username, "", "", ""]
+        [user.username, "", fakeEmail, ""]
       );
       employee_id = empResult.insertId;
       await db.execute("UPDATE users SET employee_id = ? WHERE user_id = ?", [
