@@ -12,7 +12,8 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/siddhi345-coder/EMS_FINAL_PROJECT.git'
+                // Explicitly check out the main branch
+                git branch: 'main', url: 'https://github.com/siddhi345-coder/EMS_FINAL_PROJECT.git'
             }
         }
 
