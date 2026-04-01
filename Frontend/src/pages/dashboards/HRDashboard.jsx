@@ -1180,10 +1180,10 @@ const [reportMonth, setReportMonth] = useState(() => {
               <h4><FaFileAlt /> Employee Reports</h4>
               <p>Summary and department-wise breakdown of all employees.</p>
               <div className="report-actions">
-                <a className="btn-primary" href="http://localhost:8000/reports/employees/summary/download" download>
+                <a className="btn-primary" href="http://13.62.212.126:8000/reports/employees/summary/download" download>
                   <FaDownload /> Summary
                 </a>
-                <a className="btn-outline" href="http://localhost:8000/reports/employees/department-wise/download" download>
+                <a className="btn-outline" href="http://13.62.212.126:8000/reports/employees/department-wise/download" download>
                   <FaDownload /> Dept-wise
                 </a>
               </div>
@@ -1204,7 +1204,7 @@ const [reportMonth, setReportMonth] = useState(() => {
                 </div>
                 <a
                   className="btn-primary"
-                  href={`http://localhost:8000/reports/attendance/monthly/download?month=${reportMonth.split("-")[1]}&year=${reportMonth.split("-")[0]}`}
+                  href={`http://13.62.212.126:8000/reports/attendance/monthly/download?month=${reportMonth.split("-")[1]}&year=${reportMonth.split("-")[0]}`}
                   download
                 >
                   <FaDownload /> Download Attendance
@@ -1216,7 +1216,7 @@ const [reportMonth, setReportMonth] = useState(() => {
               <h4><FaFileAlt /> Leave Reports</h4>
               <p>Leave status summary across all employees.</p>
               <div className="report-actions">
-                <a className="btn-primary" href="http://localhost:8000/reports/leaves/status-summary/download" download>
+                <a className="btn-primary" href="http://13.62.212.126:8000/reports/leaves/status-summary/download" download>
                   <FaDownload /> Leave Summary
                 </a>
               </div>

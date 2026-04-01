@@ -112,7 +112,7 @@ exports.forgotPassword = async (req, res) => {
       [resetToken, expires, user.user_id]
     );
 
-    const resetUrl = `${process.env.FRONTEND_URL || "http://localhost:5173"}/reset-password?token=${resetToken}`;
+    const resetUrl = `${process.env.FRONTEND_URL || "http://13.62.212.126"}/reset-password?token=${resetToken}`;
 
     // Try sending email if configured, otherwise return link directly
     if (process.env.MAIL_USER && process.env.MAIL_USER !== "your_email@gmail.com" && user.email) {

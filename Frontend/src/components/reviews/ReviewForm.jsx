@@ -14,7 +14,7 @@ const ReviewForm = ({ review, onClose, onSave }) => {
   useEffect(() => {
 
     // ✅ Fetch employees (not reviews)
-    axios.get("http://localhost:3000/api/employees")
+    axios.get("http://13.62.212.126:3000/api/employees")
       .then(res => setEmployees(res.data))
       .catch(err => console.error(err));
 

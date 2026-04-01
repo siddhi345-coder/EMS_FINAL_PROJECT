@@ -10,7 +10,7 @@ pipeline {
         FRONTEND_IMAGE = "sid458dhi/ems-frontend"
 
         // EC2 host for deployment
-        EC2_HOST = "13.61.23.254"
+        EC2_HOST = "13.62.212.126"
     }
 
     stages {
