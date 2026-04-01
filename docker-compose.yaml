@@ -3,6 +3,7 @@ services:
   db:
     image: mysql:8
     container_name: ems-db
+    restart: always
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: employee_management_system
@@ -10,29 +11,26 @@ services:
       - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
 
   backend:
     build: ./Backend
     container_name: ems-backend
+    restart: always
     ports:
       - "3000:3000"
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     env_file:
       - ./Backend/.env
 
   frontend:
-  build: ./Frontend
-  ports:
-    - "80:80"
-  depends_on:
-    - backend
+    build: ./Frontend
+    container_name: ems-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
 
 volumes:
   db_data:
