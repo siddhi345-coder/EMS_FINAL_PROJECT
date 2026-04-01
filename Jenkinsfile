@@ -5,6 +5,9 @@ pipeline {
         // Docker Hub credentials stored in Jenkins
         DOCKERHUB_CREDS = credentials('dockerhub-creds')
 
+        // Enable faster, smarter Docker builds
+        DOCKER_BUILDKIT = '1'
+
         // Docker image names
         BACKEND_IMAGE = "sid458dhi/ems-backend"
         FRONTEND_IMAGE = "sid458dhi/ems-frontend"
@@ -22,17 +25,25 @@ pipeline {
             }
         }
 
-        stage('Build Backend Image') {
-            steps {
-                // Use the correct folder name (case-sensitive)
-                sh 'docker build -t $BACKEND_IMAGE:latest ./Backend'
-            }
-        }
+        stage('Build Images') {
+            parallel {
+                stage('Build Backend Image') {
+                    steps {
+                        // Pull latest image to seed cache (ignore if missing)
+                        sh 'docker pull $BACKEND_IMAGE:latest || true'
+                        // Use the correct folder name (case-sensitive)
+                        sh 'docker build --cache-from $BACKEND_IMAGE:latest -t $BACKEND_IMAGE:latest ./Backend'
+                    }
+                }
 
-        stage('Build Frontend Image') {
-            steps {
-                // Use the correct folder name (case-sensitive)
-                sh 'docker build -t $FRONTEND_IMAGE:latest ./Frontend'
+                stage('Build Frontend Image') {
+                    steps {
+                        // Pull latest image to seed cache (ignore if missing)
+                        sh 'docker pull $FRONTEND_IMAGE:latest || true'
+                        // Use the correct folder name (case-sensitive)
+                        sh 'docker build --cache-from $FRONTEND_IMAGE:latest -t $FRONTEND_IMAGE:latest ./Frontend'
+                    }
+                }
             }
         }
 
@@ -72,10 +83,11 @@ pipeline {
 
     post {
         success {
-            echo "✅ CI/CD pipeline completed successfully!"
+            echo "CI/CD pipeline completed successfully!"
         }
         failure {
-            echo "❌ CI/CD pipeline failed. Check the logs above."
+            echo "CI/CD pipeline failed. Check the logs above."
         }
     }
 }
+

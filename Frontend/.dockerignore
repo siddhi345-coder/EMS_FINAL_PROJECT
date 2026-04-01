@@ -1,3 +1,11 @@
 node_modules
 dist
+build
+coverage
+*log
 npm-debug.log
+.env
+.git
+.github
+venv
+.DS_Store
