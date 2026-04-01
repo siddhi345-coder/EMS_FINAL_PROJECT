@@ -25,6 +25,18 @@ pipeline {
             }
         }
 
+        stage('Load Common Env') {
+            steps {
+                // Load a Jenkins "Secret file" into both services
+                withCredentials([file(credentialsId: 'ems-common-env', variable: 'COMMON_ENV_FILE')]) {
+                    sh '''
+                    cp "$COMMON_ENV_FILE" Backend/.env
+                    cp "$COMMON_ENV_FILE" reports_service/.env
+                    '''
+                }
+            }
+        }
+
         stage('Build Images') {
             parallel {
                 stage('Build Backend Image') {
