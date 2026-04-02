@@ -85,8 +85,8 @@ pipeline {
                     chmod 600 "$EC2_SSH_KEY"
                     ssh -i "$EC2_SSH_KEY" -o StrictHostKeyChecking=no "$EC2_SSH_USER@$EC2_HOST" "
                         cd ~/EMS_FINAL_PROJECT &&
-                        docker-compose pull &&
-                        docker-compose up -d
+                        docker compose pull &&
+                        docker compose up -d
                     "
                     '''
                 }
