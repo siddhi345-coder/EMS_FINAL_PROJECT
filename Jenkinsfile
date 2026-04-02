@@ -79,10 +79,11 @@ pipeline {
 
         stage('Deploy to EC2') {
             steps {
-                // Use SSH key stored in Jenkins
-                sshagent(['ec2-ssh-key']) {
+                // Use SSH key stored in Jenkins without sshagent plugin
+                withCredentials([sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'EC2_SSH_KEY', usernameVariable: 'EC2_SSH_USER')]) {
                     sh '''
-                    ssh -o StrictHostKeyChecking=no ubuntu@$EC2_HOST "
+                    chmod 600 "$EC2_SSH_KEY"
+                    ssh -i "$EC2_SSH_KEY" -o StrictHostKeyChecking=no "$EC2_SSH_USER@$EC2_HOST" "
                         cd ~/ems-deployment &&
                         docker-compose pull &&
                         docker-compose up -d
